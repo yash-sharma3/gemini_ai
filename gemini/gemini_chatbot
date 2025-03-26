@@ -1,0 +1,32 @@
+import google.generativeai as genai
+
+genai.configure(api_key="Your-api-key-here")
+
+# Function to interact with Gemini
+def chat_with_gemini(prompt):
+    model = genai.GenerativeModel("gemini-2.0-flash")
+    response = model.generate_content(prompt)
+    return response.text
+
+
+while True:
+
+
+    command=input("Enter your query:")
+
+    #let the command be handled by AI
+    if command!="None":
+        try:
+
+            bot_response = chat_with_gemini(command+"Answer in 30 words answer like a professional")
+            print(bot_response)
+
+        except Exception as e:  # Catch all errors
+            error_message = str(e).lower()
+            
+            if "quota" in error_message:
+                print("Currently out of quota")
+            elif "403" in error_message:
+                print("API access forbidden. Check if your quota is exhausted.")
+            else:
+                print(f"Error: {str(e)}")
